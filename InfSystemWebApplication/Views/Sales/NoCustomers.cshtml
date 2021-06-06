@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Добавить новую продажу";
+}
+
+<h2>Добавить новую продажу</h2>
+
+<h3>Записи о покупателях отсутствуют, добавить нового покупателя?</h3>
+
+@using (Html.BeginForm("NoCustomers", "Sales", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    <div class="form-actions no-color">
+        <input type="submit" value="Добавить" class="btn btn-default" /> |
+        @Html.ActionLink("К списку продаж", "Index")
+    </div>
+}
+

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<InfSystemWebApplication.Models.Customer>
+
+@{
+    ViewBag.Title = "Покупатели";
+}
+
+<h2>Список покупателей</h2>
+
+<p>
+    @Html.ActionLink("Добавить покупателя", "Create", new { returnUrl = "/Customers/Index" })
+</p>
+
+<p>
+    @Html.ActionLink("Выгрузить в MS Excel", "Export")
+</p>
+
+<p>
+    @Html.ActionLink("Поиск", "Query")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.Id, returnUrl = ViewBag.ReturnUrl }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id, returnUrl = ViewBag.ReturnUrl })
+            </td>
+        </tr>
+    }
+
+</table>

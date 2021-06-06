@@ -1,0 +1,61 @@
+﻿@model IEnumerable<InfSystemWebApplication.Models.Sale>
+
+@{
+    ViewBag.Title = "Продажи";
+}
+
+<h3>Список продаж</h3>
+
+<p>
+    @Html.ActionLink("Добавить новую продажу", "Create", new { returnUrl = "/Sales/Index" })
+</p>
+
+<p>
+    @Html.ActionLink("Выгрузить в MS Excel", "Export")
+</p>
+
+<p>
+    @Html.ActionLink("Поиск", "Query")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.View)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.View)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.View)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.View)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.Id, returnUrl = "/Sales/Index" }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id, returnUrl = "/Sales/Index" })
+            </td>
+        </tr>
+    }
+
+</table>

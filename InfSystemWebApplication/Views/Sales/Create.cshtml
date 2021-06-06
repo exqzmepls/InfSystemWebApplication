@@ -1,0 +1,144 @@
+﻿@using InfSystemWebApplication.Models
+@model Sale
+
+@{
+    ViewBag.Title = "Добавить новую продажу";
+    SoldProduct soldProduct = new SoldProduct();
+}
+
+<h3>Добавить новую продажу</h3>
+
+
+@using (Html.BeginForm("Create", "Sales", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+    <h4>Информация о продаже</h4>
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EmployeeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.Date)
+                @Html.DisplayFor(model => model.OnlyDate, new { htmlAttributes = new { @class = "label col-md-2" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <h4>Позиция продажи</h4>
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => soldProduct.ProductPriceId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("soldProduct.ProductPriceId", (SelectList)ViewBag.ProductPriceId, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => soldProduct.ProductPriceId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => soldProduct.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => soldProduct.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => soldProduct.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-offset-2 col-md-10">
+            <button name="action" value="add" class="btn-default">Добавить</button>
+        </div>
+    </div>
+
+
+    if (Model.SoldProducts != null)
+    {
+        <hr />
+        <hr />
+        @Html.LabelFor(model => model.SoldProducts, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => soldProduct.ProductView)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => soldProduct.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => soldProduct.ProductPrice.ValuePerOneUnit)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(modelItem => soldProduct.Total)
+                    </th>
+                    <th></th>
+
+                </tr>
+                @for (int i = 0; i < Model.SoldProducts.Count(); i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(modelItem => modelItem.SoldProducts[i].ProductPriceId, new { name = $".SoldProducts[{i}].ProductPriceId" })
+                            @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].ProductView)
+                        </td>
+                        <td>
+                            @Html.HiddenFor(modelItem => modelItem.SoldProducts[i].Amount, new { name = $".SoldProducts[{i}].Amount" })
+                            @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].ProductPrice.ValuePerOneUnit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].Total)
+                        </td>
+                        <td>
+                            @MvcHtmlString.Create($"<button name=\"action\" value=\"remove{i}\" class=\"btn - default\">Удалить</button>")
+                        </td>
+                    </tr>
+                }
+            </table>
+            @Html.DisplayNameFor(model => model.Total) :
+            @Html.DisplayFor(model => model.Total)
+        </div>
+        <div class="col-md-10">
+            <button name="action" value="confirm" class="btn-default">Сохранить</button>
+        </div>
+    }
+}
+
+<div>
+    @Html.ActionLink("К списку продаж", "Index")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // переопределение валидации на стороне клиента
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(",", ".");
+            return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        }
+
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
+    </script>
+}

@@ -1,0 +1,64 @@
+﻿@model InfSystemWebApplication.Models.Product
+
+@{
+    ViewBag.Title = "Удалить данные о товаре";
+}
+
+<h2>Удалить данные о товаре</h2>
+
+<h3>Вы уверены, что хотите удалить данную запись?</h3>
+<div>
+    <h4>Товар</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Name)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm("Delete", "Products", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("К списку товарво", "Index") |
+            @Html.ActionLink("К поиску по товарам", "Query")
+        </div>
+    }
+</div>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<InfSystemWebApplication.Models.SoldProduct>
+
+@{
+    ViewBag.Title = "Проданные товары";
+}
+
+<h3>Список проданных товаров</h3>
+
+<p>
+    @Html.ActionLink("Выгрузить в MS Excel", "Export")
+</p>
+<p>
+    @Html.ActionLink("Поиск", "Query")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Sale.View)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductPrice.ProductView)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductPrice.View)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sale.View)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPrice.ProductView)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPrice.View)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+        </tr>
+    }
+
+</table>

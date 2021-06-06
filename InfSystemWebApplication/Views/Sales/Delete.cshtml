@@ -1,0 +1,64 @@
+﻿@model InfSystemWebApplication.Models.Sale
+
+@{
+    ViewBag.Title = "Удалить запись о продаже";
+}
+
+<h2>Удалить продажу</h2>
+
+<h3>Вы уверены, что хотите удалить данную запись?</h3>
+<div>
+    <h4>продажа</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("Delete", "Sales", new { id = Model.Id, returnUrl = ViewBag.ReturnUrl }, FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад к списку продаж", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,83 @@
+﻿@model InfSystemWebApplication.Models.Supplier
+
+@{
+    ViewBag.Title = Model.View;
+}
+
+<h3>Информация о поставщике</h3>
+
+<div>
+    <h4>@Model.View</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+    </dl>
+
+    @if (Model.Products.Any())
+    {
+        <hr />
+        <h4>Товары</h4>
+        <table class="table">
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Название
+                </th>
+                <th>
+                    Категория
+                </th>
+                <th>
+                    Единица измерения
+                </th>
+
+            </tr>
+            @for (int i = 0; i < Model.Products.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Products[i].Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Products[i].Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Products[i].Category.View)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Products[i].Unit.View)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id, returnUrl = $"/Suppliers/Details/{Model.Id}" }) |
+    @Html.ActionLink("К списку поставщиков", "Index")
+</p>

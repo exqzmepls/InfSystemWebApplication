@@ -1,0 +1,80 @@
+﻿@model InfSystemWebApplication.Models.Sale
+
+@{
+    ViewBag.Title = Model.View;
+}
+
+<h2>@Model.View</h2>
+
+<div>
+    <h4>Информация о продаже</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+    </dl>
+    <hr />
+    <h4>Состав продажи</h4>
+    <table class="table">
+        <tr>
+            <th>
+                Товар
+            </th>
+            <th>
+                Количество
+            </th>
+            <th>
+                Цена
+            </th>
+            <th>
+                Итог
+            </th>
+
+        </tr>
+        @for (int i = 0; i < Model.SoldProducts.Count(); i++)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].ProductView)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].ProductPrice.ValuePerOneUnit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].Total)
+                </td>
+            </tr>
+        }
+    </table>
+    @Html.DisplayNameFor(model => model.Total) :
+    @Html.DisplayFor(model => model.Total)
+</div>
+<hr />
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id, returnUrl = $"/Sales/Details/{Model.Id}" }) |
+    @Html.ActionLink("К списку продаж", "Index")
+</p>

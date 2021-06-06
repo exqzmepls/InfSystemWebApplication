@@ -1,0 +1,32 @@
+﻿@*@model IQueryable<InfSystemWebApplication.Models.Supplier>
+    @{
+        ViewBag.Title = "Поиск по поставщикам";
+    }
+
+    <h2>@ViewBag.Title</h2>
+
+    @(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+            columns.Add(model => model.Id);
+            columns.Add(model => model.Name).Filterable(GridFilterType.Multi);
+            columns.Add(model => model.PhoneNumber).Filterable(GridFilterType.Single);
+        })
+        .Empty("Нет данных.")
+        .Filterable()
+        .Sortable()
+        .Pageable()
+    )*@
+
+@using InfSystemWebApplication.Models
+@model IGrid<Supplier>
+@{
+    ViewBag.Title = "Поиск по поставщикам";
+}
+
+<h3>Список поставщиков</h3>
+
+<a href="@(Url.Action("Export") + "?" + ViewContext.HttpContext.Request.QueryString)">Экспорт в MS Excel</a>
+
+@(new HtmlGrid<Supplier>(Html, Model))

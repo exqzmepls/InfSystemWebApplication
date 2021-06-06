@@ -1,0 +1,92 @@
+﻿@model InfSystemWebApplication.Models.Product
+
+@{
+    ViewBag.Title = Model.View;
+}
+
+<h3>Информация о товаре</h3>
+
+<div>
+    <h4>Товар</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.View)
+        </dd>
+
+    </dl>
+
+    @if (Model.Prices.Any())
+    {
+        <hr />
+        <h4>Товары</h4>
+        <table class="table">
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Дата назначения
+                </th>
+
+            </tr>
+            @for (int i = 0; i < Model.Prices.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Prices[i].Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Prices[i].ValuePerOneUnit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Prices[i].SettingDate)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id, returnUrl = $"/Products/Details/{Model.Id}" }) |
+    @Html.ActionLink("К списку товаров", "Index")
+</p>

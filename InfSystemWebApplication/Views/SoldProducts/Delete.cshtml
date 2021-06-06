@@ -1,0 +1,57 @@
+﻿@model InfSystemWebApplication.Models.SoldProduct
+
+@{
+    ViewBag.Title = "Удалить";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Удалить</h2>
+
+<h3>Вы уверены, что хотите удалить данную запись?</h3>
+<div>
+    <h4>Проданный товар</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductPrice.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductPrice.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sale.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sale.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("назад к списку проданных товаров", "Index")
+        </div>
+    }
+</div>

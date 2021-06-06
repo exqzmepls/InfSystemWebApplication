@@ -1,0 +1,57 @@
+﻿@model InfSystemWebApplication.Models.ProductPrice
+
+@{
+    ViewBag.Title = "Удалить цену на товар";
+}
+
+<h2>Удалить цену на товар</h2>
+
+<h3>Вы уверены, что хотите удалить данную запись?</h3>
+<div>
+    <h4>Цена на товар</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValuePerOneUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValuePerOneUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SettingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SettingDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("Delete", "ProductPrices", new { id = Model.Id, returnUrl = ViewBag.ReturnUrl }, FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("К списку цен", "Index") |
+            @Html.ActionLink("К поиску по ценам", "Query")
+        </div>
+    }
+</div>

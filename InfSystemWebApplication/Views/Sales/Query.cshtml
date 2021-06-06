@@ -1,0 +1,11 @@
+﻿@using InfSystemWebApplication.Models
+@model IGrid<Sale>
+@{
+    ViewBag.Title = "Поиск по продажам";
+}
+
+<h3>Список продаж</h3>
+
+<a href="@(Url.Action("Export") + "?" + ViewContext.HttpContext.Request.QueryString)">Экспорт в MS Excel</a>
+
+@(new HtmlGrid<Sale>(Html, Model))

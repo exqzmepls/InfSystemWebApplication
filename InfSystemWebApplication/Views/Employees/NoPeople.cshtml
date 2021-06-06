@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Добавить нового сотрудника";
+}
+
+<h2>Добавить нового сотрудника</h2>
+
+<h3>Записи о персональных данных отсутствуют, добавить персональные данные сотрудника?</h3>
+
+@using (Html.BeginForm("NoPeople", "Employees", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    <div class="form-actions no-color">
+        <input type="submit" value="Добавить" class="btn btn-default" /> |
+        @Html.ActionLink("К списку сотрудников", "Index")
+    </div>
+}
+

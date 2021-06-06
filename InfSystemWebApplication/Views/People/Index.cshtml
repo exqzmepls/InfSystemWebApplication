@@ -1,0 +1,72 @@
+﻿@model IEnumerable<InfSystemWebApplication.Models.Person>
+
+@{
+    ViewBag.Title = "Персональные данные сотрудников";
+}
+
+<h2>Персональные данные сотрудников</h2>
+
+<p>
+    @Html.ActionLink("Добавить персональные данные сотрудника", "Create", new { returnUrl = "/People/Index" })
+</p>
+
+<p>
+    @Html.ActionLink("Выгрузить в MS Excel", "Export")
+</p>
+
+<p>
+    @Html.ActionLink("Поиск", "Query")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.Id, returnUrl = "/People/Index" }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id, returnUrl = "/People/Index" })
+            </td>
+        </tr>
+    }
+
+</table>
