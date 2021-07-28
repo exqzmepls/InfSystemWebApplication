@@ -99,7 +99,7 @@
                             @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].ProductView)
                         </td>
                         <td>
-                            @Html.HiddenFor(modelItem => modelItem.SoldProducts[i].Amount, new { name = $".SoldProducts[{i}].Amount" })
+                            <input name="SoldProducts[@i].Amount" type="hidden" value="@Model.SoldProducts[i].Amount" />
                             @Html.DisplayFor(modelItem => modelItem.SoldProducts[i].Amount)
                         </td>
                         <td>
@@ -117,14 +117,17 @@
             @Html.DisplayNameFor(model => model.Total) :
             @Html.DisplayFor(model => model.Total)
         </div>
-        <div class="col-md-10">
-            <button name="action" value="confirm" class="btn-default">Сохранить</button>
-        </div>
+        if (Model.SoldProducts.Any())
+        {
+            <div class="col-md-10">
+                <button name="action" value="confirm" class="btn-default">Сохранить</button>
+            </div>
+        }
     }
 }
 
 <div>
-    @Html.ActionLink("К списку продаж", "Index")
+    @Html.ActionLink("Вернуться к списку продаж", "Index")
 </div>
 
 
