@@ -1,4 +1,5 @@
-﻿using NonFactors.Mvc.Grid;
+﻿using InfSystemWebApplication.Models;
+using NonFactors.Mvc.Grid;
 using OfficeOpenXml;
 using System;
 using System.Linq;
@@ -78,31 +79,67 @@ namespace InfSystemWebApplication.ReportBuilder
 
         private static void PrintSums<T>(ExcelWorksheet sheet, IGrid<T> grid)
         {
-            int colIndex = _startColIndex, rowIndex = _startRowIndex + grid.Rows.Count() + 1;
+            int rowIndex = _startRowIndex + grid.Rows.Count() + 1;
 
-            foreach (var column in grid.Columns)
+            if (grid is Grid<Sale> salesGrid)
             {
-                if (column is IGridColumn<T, double?> || column is IGridColumn<T, double>)
-                {
-                    sheet.Cells[rowIndex, colIndex].Value = Sum(grid, column);                    
-                }
+                int colIndex = 5;
+                sheet.Cells[rowIndex, colIndex + 1].Value = "Сумма";
+                sheet.Cells[rowIndex + 1, colIndex + 1].Value = "Среднее";
+                sheet.Cells[rowIndex + 2, colIndex + 1].Value = "Мин.";
+                sheet.Cells[rowIndex + 3, colIndex + 1].Value = "Макс.";
 
-                colIndex++;
-            }
-        }
-
-        private static double Sum<T>(IGrid<T> grid, IGridColumn column)
-        {
-            double sum = 0;
-
-            foreach (IGridRow<object> row in grid.Rows)
-            {
-                string s = column.ValueFor(row).ToString();
-                if (string.IsNullOrEmpty(s)) s = "0";
-                sum += Convert.ToDouble(s);
+                sheet.Cells[rowIndex, colIndex].Value = salesGrid.Rows.Sum(x => x.Model.Total);
+                sheet.Cells[rowIndex + 1, colIndex].Value = salesGrid.Rows.Average(x => x.Model.Total);
+                sheet.Cells[rowIndex + 2, colIndex].Value = salesGrid.Rows.Min(x => x.Model.Total);
+                sheet.Cells[rowIndex + 3, colIndex].Value = salesGrid.Rows.Max(x => x.Model.Total);
+                return;
             }
 
-            return sum;
+            if (grid is Grid<SoldProduct> productGrid)
+            {
+                int colIndex = 5;
+                sheet.Cells[rowIndex, colIndex + 1].Value = "Сумма";
+                sheet.Cells[rowIndex + 1, colIndex + 1].Value = "Среднее";
+                sheet.Cells[rowIndex + 2, colIndex + 1].Value = "Мин.";
+                sheet.Cells[rowIndex + 3, colIndex + 1].Value = "Макс.";
+                sheet.Cells[rowIndex, colIndex].Value = productGrid.Rows.Sum(x => x.Model.Total);
+                sheet.Cells[rowIndex + 1, colIndex].Value = productGrid.Rows.Average(x => x.Model.Total);
+                sheet.Cells[rowIndex + 2, colIndex].Value = productGrid.Rows.Min(x => x.Model.Total);
+                sheet.Cells[rowIndex + 3, colIndex].Value = productGrid.Rows.Max(x => x.Model.Total);
+                colIndex = 4;
+                sheet.Cells[rowIndex, colIndex].Value = productGrid.Rows.Sum(x => x.Model.Amount);
+                sheet.Cells[rowIndex + 1, colIndex].Value = productGrid.Rows.Average(x => x.Model.Amount);
+                sheet.Cells[rowIndex + 2, colIndex].Value = productGrid.Rows.Min(x => x.Model.Amount);
+                sheet.Cells[rowIndex + 3, colIndex].Value = productGrid.Rows.Max(x => x.Model.Amount);
+                return;
+            }
+
+
+
+            //foreach (var column in grid.Columns)
+            //{
+            //    if (column is IGridColumn<T, double?> || column is IGridColumn<T, double>)
+            //    {
+            //        sheet.Cells[rowIndex, colIndex].Value = Sum(grid, column);                    
+            //    }
+
+            //    colIndex++;
+            //}
         }
+
+        //private static double Sum<T>(IGrid<T> grid, IGridColumn column)
+        //{
+        //    double sum = 0;
+
+        //    foreach (IGridRow<object> row in grid.Rows)
+        //    {
+        //        string s = column.ValueFor(row).ToString();
+        //        if (string.IsNullOrEmpty(s)) s = "0";
+        //        sum += Convert.ToDouble(s);
+        //    }
+
+        //    return sum;
+        //}
     }
 }
