@@ -104,10 +104,14 @@ namespace InfSystemWebApplication.Controllers
             {
                 if (sale.SoldProducts is null) sale.SoldProducts = new List<SoldProduct>();
 
-                SoldProduct sold = sale.SoldProducts.FirstOrDefault(x => x.ProductPriceId == soldProduct.ProductPriceId);
+                int soldIndex = sale.SoldProducts.FindIndex(x => x.ProductPriceId == soldProduct.ProductPriceId);
 
-                if (sold is null) sale.SoldProducts.Add(new SoldProduct() { ProductPriceId = soldProduct.ProductPriceId, Amount = soldProduct.Amount });
-                else sold.Amount += soldProduct.Amount;
+                if (soldIndex == -1) sale.SoldProducts.Add(new SoldProduct() { ProductPriceId = soldProduct.ProductPriceId, Amount = soldProduct.Amount });
+                else
+                {
+                    double prevAmount = sale.SoldProducts[soldIndex].Amount;
+                    sale.SoldProducts[soldIndex] = new SoldProduct() { ProductPriceId = soldProduct.ProductPriceId, Amount = soldProduct.Amount + prevAmount };
+                }
             }
             else
             {
@@ -305,6 +309,7 @@ namespace InfSystemWebApplication.Controllers
 
             grid.Columns.Add(model => model.Total)
                 .Sortable(true).Filterable(GridFilterType.Double);
+
 
             if (!isExport) grid.Columns.Add().RenderedAs(x => new HtmlString($"<a href={GetEditHref(x.Id)}>Изменить</a> | <a href={GetDeleteHref(x.Id)}>Удалить</a>"));
 
