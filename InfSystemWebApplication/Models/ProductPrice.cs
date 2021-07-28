@@ -6,7 +6,7 @@ using System.Web;
 
 namespace InfSystemWebApplication.Models
 {
-    public class ProductPrice //: IComparable
+    public class ProductPrice : IComparable
     {
         [Display(Name = "ID")]
         public int Id { get; set; }
@@ -31,14 +31,14 @@ namespace InfSystemWebApplication.Models
         [Display(Name = "Товар")]
         public string ProductView => Product.View;
 
-        //public int CompareTo(object obj)
-        //{
-        //    if (obj == null) return 1;
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
 
-        //    if (obj is ProductPrice price) return ValuePerOneUnit.CompareTo(price.ValuePerOneUnit);
+            if (obj is ProductPrice price) return ValuePerOneUnit.CompareTo(price.ValuePerOneUnit);
 
-        //    throw new ArgumentException("Object is not a ProductPrice");
-        //}
+            throw new ArgumentException("Object is not a ProductPrice");
+        }
 
         public override string ToString() => View;
     }
